@@ -16,7 +16,7 @@
 // the images posted on github all have the same total line length and 15 segments 
 
 var materials = {
-		'mirror' : [false, true, true, true, true, true, true, true, true],
+		'mirror' : [false, true, true, true, true, true, true, true, false],
 		'file_names' : ["https://raw.githubusercontent.com/MatthewXuNortheastern/mirror_trace/master/sample.png", "https://raw.githubusercontent.com/MatthewXuNortheastern/mirror_trace/master/trialh1.png", "https://raw.githubusercontent.com/MatthewXuNortheastern/mirror_trace/master/trialh2.png", "https://raw.githubusercontent.com/MatthewXuNortheastern/mirror_trace/master/trialh3.png", "https://raw.githubusercontent.com/MatthewXuNortheastern/mirror_trace/master/trial1.png", "https://raw.githubusercontent.com/MatthewXuNortheastern/mirror_trace/master/trial2.png", "https://raw.githubusercontent.com/MatthewXuNortheastern/mirror_trace/master/trial3.png", "https://raw.githubusercontent.com/MatthewXuNortheastern/mirror_trace/master/sample.png", "https://raw.githubusercontent.com/MatthewXuNortheastern/mirror_trace/master/mtstar.png"],
 		'xstarts' : [47,	27,		40,		280,		27, 40, 280, 33, 47],
 		'ystarts' : [256,	275,	45,		276,		275, 45, 276, 250, 256],
