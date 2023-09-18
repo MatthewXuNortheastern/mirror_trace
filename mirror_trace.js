@@ -33,8 +33,8 @@ var materials = {
 // the script can save screenshots of completed trials.  
 // to use this feature, set saveTrace to true and set saveScript to your server.  Your server will need a php script for accepting the files.
 // the php script is posted on github
-var saveScript = "https://calin-jageman.net/mirror_trace/save.php"
-var saveTrace = false;
+var saveScript = "https://halogen-framing-399222.ue.r.appspot.com/post-endpoint"
+var saveTrace = true;
 
 
 //image dimensions
@@ -61,6 +61,7 @@ var startTime = 0;
 var endTime = 0;
 var lastRefresh = 0;
 var currentRefresh = 0;
+var redCircle = "redCircle.png"
 
 
 
@@ -377,20 +378,30 @@ canvas_mirror.parentNode.removeChild(screenshot);
 var url = saveScript;
 
 jQuery.ajax({
-
-	type: "POST", 
-	url: url,
-	dataType: 'text',
-	data: {
-	id : MID,
-	trial : trialnumber,
-	score : score,
-	distance_inline : distance_inline,
-	distance_offline : distance_offline,
-	timeDiff : timeDiff,
-	crossings : crossings,
-	base64data : data
-	}
+    type: "post",
+    url: url,
+    dataType: 'text', // Note: It should be 'dataType', not 'datatype'
+    data: {
+        id: MID,
+        trial: trialnumber,
+        score: score,
+        distance_inline: distance_inline,
+        distance_offline: distance_offline,
+        timeDiff: timeDiff,
+        crossings: crossings,
+        base64data: data
+    },
+    success: function (response) {
+        // This function will be called if the request succeeds (status code 2xx)
+        console.log("Request succeeded!");
+        console.log("Response:", response);
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+        // This function will be called if the request encounters an error (status code is not 2xx)
+        console.error("Request failed!");
+        console.error("Status Code:", jqXHR.status);
+        console.error("Error:", errorThrown);
+    }
 });
 }
 
