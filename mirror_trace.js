@@ -33,7 +33,7 @@ var materials = {
 // the script can save screenshots of completed trials.  
 // to use this feature, set saveTrace to true and set saveScript to your server.  Your server will need a php script for accepting the files.
 // the php script is posted on github
-var saveScript = "https://halogen-framing-399222.ue.r.appspot.com/post-endpoint"
+var saveScript = "https://script.google.com/macros/s/AKfycbwTbkQOKM5Uq8AmQDwIqeZlpOZICcT0MU-ndzmv7sEjQCz-KV8WTDPtg934XESZigpB/exec"
 var saveTrace = true;
 
 
@@ -363,46 +363,86 @@ return ((r << 16) | (g << 8) | b).toString(16);
 }
 
 function saveCanvas() {
+	// Get the canvas screenshot as PNG
+	var screenshot = Canvas2Image.saveAsPNG(canvas_mirror, true);
 
-// Get the canvas screenshot as PNG
-var screenshot = Canvas2Image.saveAsPNG(canvas_mirror, true);
+	// This is a little trick to get the SRC attribute from the generated <img> screenshot
+	canvas_mirror.parentNode.appendChild(screenshot);
+	screenshot.id = "canvasimage";
+	data = screenshot.src;
+	canvas_mirror.parentNode.removeChild(screenshot);
 
-// This is a little trick to get the SRC attribute from the generated <img> screenshot
-canvas_mirror.parentNode.appendChild(screenshot);
-screenshot.id = "canvasimage";	
-data =  screenshot.src; 
-canvas_mirror.parentNode.removeChild(screenshot);
+	// Send the screenshot to Google Apps Script to save it in Google Drive
+	var url = saveScript;
+
+	var formData = new FormData();
+	formData.append("id", MID);
+	formData.append("trial", trialnumber);
+	formData.append("score", score);
+	formData.append("distance_inline", distance_inline);
+	formData.append("distance_offline", distance_offline);
+	formData.append("timeDiff", timeDiff);
+	formData.append("crossings", crossings);
+	formData.append("base64data", data);
+
+	fetch(url, {
+	method: "POST",
+	body: formData
+	})
+	.then(function (response) {
+		if (response.ok) {
+		return response.text();
+		} else {
+		throw new Error("Network response was not ok");
+		}
+	})
+	.then(function (text) {
+		// Handle a successful response here
+		console.log("Success:", text);
+	})
+	.catch(function (error) {
+		// Handle errors here
+		console.error("Error:", error);
+	});
 
 
-// Send the screenshot to PHP to save it on the server
-var url = saveScript;
+	// // Get the canvas screenshot as PNG
+	// var screenshot = Canvas2Image.saveAsPNG(canvas_mirror, true);
 
-jQuery.ajax({
-    type: "post",
-    url: url,
-    dataType: 'text', // Note: It should be 'dataType', not 'datatype'
-    data: {
-        id: MID,
-        trial: trialnumber,
-        score: score,
-        distance_inline: distance_inline,
-        distance_offline: distance_offline,
-        timeDiff: timeDiff,
-        crossings: crossings,
-        base64data: data
-    },
-    success: function (response) {
-        // This function will be called if the request succeeds (status code 2xx)
-        console.log("Request succeeded!");
-        console.log("Response:", response);
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-        // This function will be called if the request encounters an error (status code is not 2xx)
-        console.error("Request failed!");
-        console.error("Status Code:", jqXHR.status);
-        console.error("Error:", errorThrown);
-    }
-});
-}
+	// // This is a little trick to get the SRC attribute from the generated <img> screenshot
+	// canvas_mirror.parentNode.appendChild(screenshot);
+	// screenshot.id = "canvasimage";	
+	// data =  screenshot.src; 
+	// canvas_mirror.parentNode.removeChild(screenshot);
+
+  
+	// // Send the screenshot to PHP to save it on the server
+	// var url = saveScript;
+
+	// jQuery.ajax({
+	// 	type: "POST",
+	// 	url: url,
+	// 	dataType: 'text',
+	// 	data: {
+	// 		id: MID,
+	// 		trial: trialnumber,
+	// 		score: score,
+	// 		distance_inline: distance_inline,
+	// 		distance_offline: distance_offline,
+	// 		timeDiff: timeDiff,
+	// 		crossings: crossings,
+	// 		base64data: data
+	// 	},
+	// 	success: function (response) {
+	// 		// Handle a successful response here
+	// 		console.log("Success:", response);
+	// 	},
+	// 	error: function (xhr, status, error) {
+	// 		// Handle errors here
+	// 		console.log("Error:", error);
+	// 		console.log("Status:", status);
+	// 	}
+	// });
+}	
 
 }

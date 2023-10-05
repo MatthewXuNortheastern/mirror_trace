@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawing Panel</title>
+    <style>
+        #canvas-container {
+            display: flex; /* Use flexbox to position the canvases side by side */
+        }
+        .canvas-wrapper {
+            border: 1px solid #000000;
+            margin: 10px; /* Add margin for spacing between the canvases */
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container">
+        <div class="canvas-wrapper">
+            <canvas width="400" id="mirror" height="300"></canvas>
+        </div>
+        <div class="canvas-wrapper">
+            <canvas width="400" id="paint" height="300"></canvas>
+        </div>
+    </div>
+
+    <div id="status">&nbsp;</div>
+
+    <div>&nbsp;</div>
+
+    <div>Trial 5</div>
+
+    <script src="jquery.js" type="text/javascript"></script>
+    <script src="base64.js" type="text/javascript"></script>
+    <script src="canvas2image.js" type="text/javascript"></script>
+    <script src="mirror_trace.js"></script>
+    <script>
+        var that = this;
+
+        window.addEventListener('load', function () {
+            trialnumber = 8;
+            do_mirror();
+        });
+
+        window.addEventListener('unload', function () {
+            window.clearInterval(myVar);
+        });
+    </script>
+</body>
+</html>
