@@ -44,6 +44,7 @@ var myheight = 300;
 var score = 0;
 var timeDiff = 0;
 var trialnumber = 0;
+var currenttrial = 0;
 var MID = 0;
 var drawing = false;
 var finished = false;
@@ -186,7 +187,7 @@ canvas.addEventListener('mousemove', function(e) {
 		}
 
 		//check to see where we are drawing
-		if (p[0]+p[1]+p[2] < 200) {
+		if (p[0]+p[1]+p[2] < 225) {
 			if(inline) {
 				distance_inline = distance_inline + distance_current;
 			} else {
@@ -378,6 +379,7 @@ function saveCanvas() {
 	var formData = new FormData();
 	formData.append("id", MID);
 	formData.append("trial", trialnumber);
+	formData.append("currenttrial", currenttrial);
 	formData.append("score", score);
 	formData.append("distance_inline", distance_inline);
 	formData.append("distance_offline", distance_offline);
