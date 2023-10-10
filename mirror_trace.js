@@ -33,7 +33,7 @@ var materials = {
 // the script can save screenshots of completed trials.  
 // to use this feature, set saveTrace to true and set saveScript to your server.  Your server will need a php script for accepting the files.
 // the php script is posted on github
-var saveScript = "https://script.google.com/macros/s/AKfycbwTbkQOKM5Uq8AmQDwIqeZlpOZICcT0MU-ndzmv7sEjQCz-KV8WTDPtg934XESZigpB/exec"
+var saveScript = "https://script.google.com/macros/s/AKfycbwt-Sr-RnaKgdtJw5JW9Scq_NBQTtdisNaBdwhm7Te3F-En5ggUz0BoteIDeI8wES8e/exec"
 var saveTrace = true;
 
 
